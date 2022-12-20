@@ -12,10 +12,10 @@ for item in list:
             print(f"{item} is odd")
     elif item.isupper():
         print(f"{item} is a capital letter")
-    else:
+    elif item.islower():
         print(f"{item} is a lowercase letter")
-else:
-    print(f"{item} is a symbol")
+    else:
+        print(f"{item} is a symbol")
 
 
 
