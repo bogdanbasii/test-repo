@@ -1,10 +1,8 @@
 x = input("Enter a symbol:")
 
-list= list(x)
+print(x)
 
-print(list)
-
-for item in list:
+for item in x:
     if item.isdigit():
         if int(item) % 2 == 0:
             print(f"{item} is even")
@@ -21,7 +19,7 @@ for item in list:
 
 
 import time
-a = 0
-while a < 10:
+
+while True:
    print("I love Python")
    time.sleep(4.2)
