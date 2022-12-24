@@ -23,7 +23,7 @@ while True:
     elif command == 'add':
         name=input('Enter a name:')
         if name in phonebook.keys():
-            print("Fault. There is such name in a phonebook.)
+            print("Fault. There is such name in a phonebook.")
             
         else:
             print("There is no such name in a phonebook. Continue.")
