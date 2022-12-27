@@ -40,7 +40,7 @@ def fibonacci(a):
 
 print(fibonacci(a))
 
-# Task 4. Factorial received through recursion
+#Task 4. Factorial received through recursion
 
 n = int(input('Input a number: '))
 
