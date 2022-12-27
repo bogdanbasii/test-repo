@@ -28,6 +28,19 @@ def my_iterator(n):
 
 print(list(my_iterator(a))[-1])
 
+#Task 3. Fibonacci received through recursion
+
+# Factorial received through recursion
+a = int(input('Input a number: '))
+
+def fibonacci(a):
+    if(a <= 1):
+        return a
+    else:
+        return(fibonacci(a-1) + fibonacci(a-2))
+
+print(fibonacci(a))
+
 # Task 4. Factorial received through recursion
 
 n = int(input('Input a number: '))
