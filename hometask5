@@ -30,7 +30,6 @@ print(list(my_iterator(a))[-1])
 
 #Task 3. Fibonacci received through recursion
 
-# Factorial received through recursion
 a = int(input('Input a number: '))
 
 def fibonacci(a):
