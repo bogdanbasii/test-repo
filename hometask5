@@ -1,3 +1,5 @@
+#Task 1. Fibonacci generator
+
 a = int(input('Input a number: '))
 
 
@@ -11,7 +13,7 @@ print(list(my_generator(a))[-1])
 
 
 
-#fibonacci iterator
+#Task 2. Fibonacci iterator
 
 a = int(input('Input a number: '))
 
@@ -25,6 +27,17 @@ def my_iterator(n):
         a, b = b, a+b
 
 print(list(my_iterator(a))[-1])
+
+# Task 4. Factorial received through recursion
+
+n = int(input('Input a number: '))
+
+def factorial(n):
+    if n == 0:
+        return 1
+    return n * factorial(n-1)
+
+print(factorial(n))
 
 
 
