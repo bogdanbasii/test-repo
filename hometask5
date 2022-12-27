@@ -1,0 +1,14 @@
+a = int(input('Input a number: '))
+
+
+def my_generator(n):
+    a=b=1
+    for item in range(n):
+        yield a
+        a, b = b, a+b
+
+print(list(my_generator(a))[-1])
+
+
+
+
