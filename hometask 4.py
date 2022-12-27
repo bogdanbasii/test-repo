@@ -24,10 +24,10 @@ while True:
         name=input('Enter a name:')
         if name in phonebook.keys():
             print("Fault. There is such name in a phonebook.")
-            
+
         else:
             print("There is no such name in a phonebook. Continue.")
-        name=input('Enter a name:')
+
         number=input('Enter a number:')
         phonebook[name]=number
         print('New contact was added')
@@ -44,6 +44,8 @@ while True:
     elif command == 'show':
         print(phonebook)
         name=input('Enter a name:')
-        print(phonebook[name])
+        if name not in phonebook.keys():
+            print("Fault. There is no such name in a phonebook.")
+        else: print(phonebook[name])
     elif command == 'end':
         break
