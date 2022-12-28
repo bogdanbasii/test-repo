@@ -22,15 +22,17 @@ while True:
         print(len(phonebook))
     elif command == 'add':
         name=input('Enter a name:')
-        if name in phonebook.keys():
+        if not name in phonebook.keys():
+           number = input('Enter a number:')
+           phonebook[name]=number
+           print('New contact was added')
+        else:
+            name in phonebook.keys()
             print("Fault. There is such name in a phonebook.")
 
-        else:
-            print("There is no such name in a phonebook. Continue.")
 
-        number=input('Enter a number:')
-        phonebook[name]=number
-        print('New contact was added')
+
+
     elif command == 'delete':
             key = input('Enter some name: ')
             if phonebook.get(key):
