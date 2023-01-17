@@ -1,5 +1,5 @@
 # Task 1
-#
+
 import time
 def my_decorator(func):
     def wrap(*args, **kwargs):
