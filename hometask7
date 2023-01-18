@@ -66,44 +66,44 @@ with open('json_phonebook.json', 'w') as file:
     json.dump(phonebook, file)
 
 
-# Task 2
-#
-# import time
-# import os
-#
-# f = open('log1.txt', "w+")
-# def log_message(func):
-#
-#     def wrap(*args, **kwargs):
-#         print(time.ctime())
-#         return_value = func(*args, **kwargs)
-#         fname = func.__name__
-#         print(fname)
-#         f.write(time.ctime() +os.linesep)
-#         f.write(fname)
-#         return return_value
-#
-#     return wrap
-#
-# @log_message
-# def my_func():
-#     print('This is my func')
-# my_func()
-#
-# f.close()
+Task 2
+
+import time
+import os
+
+f = open('log1.txt', "w+")
+def log_message(func):
+
+    def wrap(*args, **kwargs):
+        print(time.ctime())
+        return_value = func(*args, **kwargs)
+        fname = func.__name__
+        print(fname)
+        f.write(time.ctime() +os.linesep)
+        f.write(fname)
+        return return_value
+
+    return wrap
+
+@log_message
+def my_func():
+    print('This is my func')
+my_func()
+
+f.close()
 
 
-#Task 3
-# import time
-# import os
-# import logging
-#
-# try:
-#     printf("This is a mistake")
-# except Exception as Argument:
-#
-#     f = open("log2.txt", "w")
-#     f.write(time.ctime() + os.linesep)
-#     f.write(str(Argument))
-#
-#     f.close()
+Task 3
+import time
+import os
+import logging
+
+try:
+    printf("This is a mistake")
+except Exception as Argument:
+
+    f = open("log2.txt", "w")
+    f.write(time.ctime() + os.linesep)
+    f.write(str(Argument))
+
+    f.close()
