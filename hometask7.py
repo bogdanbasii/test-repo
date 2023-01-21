@@ -66,7 +66,7 @@ with open('json_phonebook.json', 'w') as file:
     json.dump(phonebook, file)
 
 
-Task 2
+# Task 2
 
 import time
 import os
@@ -93,17 +93,16 @@ my_func()
 f.close()
 
 
-Task 3
-import time
+# Task 3
+
 import os
-import logging
 
-try:
-    printf("This is a mistake")
-except Exception as Argument:
-
-    f = open("log2.txt", "w")
-    f.write(time.ctime() + os.linesep)
-    f.write(str(Argument))
-
-    f.close()
+import time
+class MyException(Exception):
+    def __init__(self, message):
+     with open('log2.txt', 'w') as f:
+        f.write(time.ctime() + os.linesep)
+        f.write(str(message))
+    pass
+if True:
+    raise MyException('Custom exception is occured')
