@@ -10,17 +10,12 @@ if phonebook.get(name):
     print(f'{name} already exists. You need to delete a record and add again if you want to change it')
 else:
     phonebook[name] = number
-    ukrphones1 = ''.join(re.findall("\+380[\d]{9}", number))
-    ukrphones2 = ''.join(re.findall("380[\d]{9}", number))
-    ukrphones3 = ''.join(re.findall("0[\d]{9}", number))
+    ukrphones = ''.join(re.findall("([+]?380\d{9}|0\d{9})", number))
 
-    if number == ukrphones1 or ukrphones2 or ukrphones3:
+    if number == ukrphones:
         print(f"It is a Ukrainian number:{number}")
     else:
         print("It is not a Ukrainian number")
-
-
-
 
 while True:
     user_input = input('Enter a command:')
@@ -35,11 +30,9 @@ while True:
             number = input('Enter a number:')
             phonebook[name] = number
 
-            ukrphones1 = ''.join(re.findall("\+380[\d]{9}", number))
-            ukrphones2 = ''.join(re.findall("380[\d]{9}", number))
-            ukrphones3 = ''.join(re.findall("0[\d]{9}", number))
+            ukrphones = ''.join(re.findall("([+]?380\d{9}|0\d{9})", number))
 
-            if number == ukrphones1 or ukrphones2 or ukrphones3:
+            if number == ukrphones:
                 print(f"It is a Ukrainian number:{number}")
             else:
                 print("It is not a Ukrainian number")
