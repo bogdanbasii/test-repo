@@ -1,0 +1,61 @@
+import re
+
+# print command "ukr" to find the list of Ukrainian numbers
+phonebook = {}
+
+name = input('Enter a name:')
+
+number = input('Enter a number:')
+
+if phonebook.get(name):
+    print(f'{name} already exists. You need to delete a record and add again if you want to change it')
+else:
+    phonebook[name] = number
+
+while True:
+    user_input = input('Enter a command:')
+    split_input = user_input.split()
+
+    command = split_input[0]
+    if command == 'stats':
+        print(len(phonebook))
+    elif command == 'add':
+        name = input('Enter a name:')
+        if not name in phonebook.keys():
+            number = input('Enter a number:')
+            phonebook[name] = number
+            print('New contact was added')
+        else:
+            name in phonebook.keys()
+            print("Fault. There is such name in a phonebook.")
+
+
+
+
+    elif command == 'delete':
+        key = input('Enter some name: ')
+        if phonebook.get(key):
+            del phonebook[key]
+            print("Record was deleted")
+        else:
+            print('Such record never existed')
+    elif command == 'list':
+        list = (phonebook.items())
+        print(list)
+    elif command == 'show':
+        print(phonebook)
+        name = input('Enter a name:')
+        if name not in phonebook.keys():
+            print("Fault. There is no such name in a phonebook.")
+        else:
+            print(phonebook[name])
+
+    elif command == 'ukr':
+        ukrphones = re.findall("\+380[\d]{9}", number)
+        ukrphones2 = re.findall("380[\d]{9}", number)
+        ukrphones3 = re.findall("0[\d]{9}", number)
+
+        print("Here is the list of Ukrainian numbers:", ukrphones, ukrphones2, ukrphones3)
+
+    elif command == 'end':
+        break
