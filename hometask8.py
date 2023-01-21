@@ -66,6 +66,8 @@ while True:
     elif command == 'end':
         break
 
+#Task 2
+
 
 file = input("Enter file name: ")
 with open(file, "r") as f:
