@@ -1,6 +1,5 @@
 import re
 
-# print command "ukr" to find the list of Ukrainian numbers
 phonebook = {}
 
 name = input('Enter a name:')
@@ -11,6 +10,17 @@ if phonebook.get(name):
     print(f'{name} already exists. You need to delete a record and add again if you want to change it')
 else:
     phonebook[name] = number
+    ukrphones1 = ''.join(re.findall("\+380[\d]{9}", number))
+    ukrphones2 = ''.join(re.findall("380[\d]{9}", number))
+    ukrphones3 = ''.join(re.findall("0[\d]{9}", number))
+
+    if number == ukrphones1 or ukrphones2 or ukrphones3:
+        print(f"It is a Ukrainian number:{number}")
+    else:
+        print("It is not a Ukrainian number")
+
+
+
 
 while True:
     user_input = input('Enter a command:')
@@ -24,6 +34,16 @@ while True:
         if not name in phonebook.keys():
             number = input('Enter a number:')
             phonebook[name] = number
+
+            ukrphones1 = ''.join(re.findall("\+380[\d]{9}", number))
+            ukrphones2 = ''.join(re.findall("380[\d]{9}", number))
+            ukrphones3 = ''.join(re.findall("0[\d]{9}", number))
+
+            if number == ukrphones1 or ukrphones2 or ukrphones3:
+                print(f"It is a Ukrainian number:{number}")
+            else:
+                print("It is not a Ukrainian number")
+
             print('New contact was added')
         else:
             name in phonebook.keys()
@@ -50,12 +70,16 @@ while True:
         else:
             print(phonebook[name])
 
-    elif command == 'ukr':
-        ukrphones = re.findall("\+380[\d]{9}", number)
-        ukrphones2 = re.findall("380[\d]{9}", number)
-        ukrphones3 = re.findall("0[\d]{9}", number)
-
-        print("Here is the list of Ukrainian numbers:", ukrphones, ukrphones2, ukrphones3)
-
     elif command == 'end':
         break
+
+
+file = input("Enter file name: ")
+with open(file, "r") as f:
+    content = f.read()
+    print(content)
+
+    content_new = re.sub(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+\S', '*@*', content)
+
+print(content_new)
+
