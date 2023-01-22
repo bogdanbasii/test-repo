@@ -1,69 +1,72 @@
 # Task 1
 import json
 
-with open('json_phonebook.json') as file:
-    phonebook = json.load(file)
+
+try:
+    with open('json_phonebook.json', 'r') as file:
+        data = file.read()
+        phonebook = json.loads(data)
+except FileNotFoundError:
+    # if file does not exist
+    phonebook = {}
+
+while True:
+    user_input = input('Enter a command:')
+    split_input = user_input.split()
+    command = split_input[0]
 
 
-    name = input('Enter a name:')
-
-    number = input('Enter a number:')
-
-
-    if phonebook.get(name):
-        print(f'{name} already exists. You need to delete a record and add again if you want to change it')
-    else:
-        phonebook[name] = number
-
-    while True:
-        user_input = input('Enter a command:')
-        split_input = user_input.split()
-
-        command = split_input[0]
-        if command == 'stats':
-            print(len(phonebook))
+    if command == 'stats':
+        print(len(phonebook))
 
 
-        elif command == 'add':
-            name = input('Enter a name:')
-            if not name in phonebook.keys():
-                number = input('Enter a number:')
-                phonebook[name] = number
-                print('New contact was added')
-            else:
-                name in phonebook.keys()
-                print("Fault. There is such name in a phonebook.")
-                with open('json_phonebook.json', 'a') as file:
-                    json.dump(phonebook, file)
+    elif command == 'add':
+        name = input('Enter a name:')
+        if not name in phonebook.keys():
+            number = input('Enter a number:')
+            phonebook[name] = number
+            with open('json_phonebook.json', 'a') as file:
+                content = json.dumps(phonebook)
+                file.write(content)
+            print('New contact was added')
+        else:
+            name in phonebook.keys()
+            print("Fault. There is such name in a phonebook.")
+            with open('json_phonebook.json', 'a') as file:
+                json.dump(phonebook, file)
 
 
 
-        elif command == 'del':
-            key = input('Enter some name: ')
-            if phonebook.get(key):
-                del phonebook[key]
-                print("Record was deleted")
-            else:
-                print('Such record never existed')
-                with open('json_phonebook.json', 'a') as file:
-                    json.dump(phonebook, file)
+    elif command == 'del':
+        key = input('Enter some name: ')
+        if phonebook.get(key):
+            del phonebook[key]
+            with open('json_phonebook.json', 'w') as file:
+                data = json.dumps(phonebook)
+                file.write(data)
+            print("Record was deleted")
+        else:
+            print('Such record never existed')
 
 
-        elif command == 'list':
-            list = (phonebook.items())
-            print(list)
-        elif command == 'show':
-            print(phonebook)
-            name = input('Enter a name:')
-            if name not in phonebook.keys():
-                print("Fault. There is no such name in a phonebook.")
-            else:
-                print(phonebook[name])
-        elif command == 'end':
-            break
 
-with open('json_phonebook.json', 'w') as file:
-    json.dump(phonebook, file)
+    elif command == 'list':
+        list = (phonebook.items())
+        print(list)
+
+
+    elif command == 'show':
+        print(phonebook)
+        name = input('Enter a name:')
+        if name not in phonebook.keys():
+            print("Fault. There is no such name in a phonebook.")
+        else:
+            print(phonebook[name])
+
+
+    elif command == 'end':
+        break
+
 
 
 # Task 2
