@@ -25,17 +25,11 @@ while True:
         if not name in phonebook.keys():
             number = input('Enter a number:')
             phonebook[name] = number
-            with open('json_phonebook.json', 'a') as file:
+            with open('json_phonebook.json', 'w+') as file:
                 content = json.dumps(phonebook)
                 file.write(content)
             print('New contact was added')
-        else:
-            name in phonebook.keys()
-            print("Fault. There is such name in a phonebook.")
-            with open('json_phonebook.json', 'a') as file:
-                json.dump(phonebook, file)
-
-
+    
 
     elif command == 'del':
         key = input('Enter some name: ')
@@ -103,9 +97,9 @@ import os
 import time
 class MyException(Exception):
     def __init__(self, message):
-     with open('log2.txt', 'w') as f:
-        f.write(time.ctime() + os.linesep)
-        f.write(str(message))
+    with open('log2.txt', 'w') as f:
+       f.write(time.ctime() + os.linesep)
+       f.write(str(message))
     pass
 if True:
     raise MyException('Custom exception is occured')
