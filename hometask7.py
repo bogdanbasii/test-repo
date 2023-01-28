@@ -65,10 +65,6 @@ while True:
 
 # Task 2
 
-import time
-import os
-
-f = open('log1.txt', "w+")
 def log_message(func):
 
     def wrap(*args, **kwargs):
@@ -76,8 +72,10 @@ def log_message(func):
         return_value = func(*args, **kwargs)
         fname = func.__name__
         print(fname)
+        f = open('log1.txt', "w+")
         f.write(time.ctime() +os.linesep)
         f.write(fname)
+        f.close()
         return return_value
 
     return wrap
@@ -87,7 +85,6 @@ def my_func():
     print('This is my func')
 my_func()
 
-f.close()
 
 
 # Task 3
@@ -97,9 +94,9 @@ import os
 import time
 class MyException(Exception):
     def __init__(self, message):
-    with open('log2.txt', 'w') as f:
-       f.write(time.ctime() + os.linesep)
-       f.write(str(message))
+        with open('log2.txt', 'w') as f:
+            f.write(time.ctime() + os.linesep)
+            f.write(str(message))
     pass
 if True:
     raise MyException('Custom exception is occured')
