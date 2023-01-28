@@ -99,4 +99,4 @@ class MyException(Exception):
             f.write(str(message))
     pass
 if True:
-    raise MyException('Custom exception is occured')
+    raise MyException('Custom exception is occurred')
