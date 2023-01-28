@@ -6,16 +6,17 @@ name = input('Enter a name:')
 
 number = input('Enter a number:')
 
-if phonebook.get(name):
-    print(f'{name} already exists. You need to delete a record and add again if you want to change it')
-else:
-    phonebook[name] = number
-    ukrphones = ''.join(re.findall("([+]?380\d{9}|0\d{9})", number))
 
-    if number == ukrphones:
-        print(f"It is a Ukrainian number:{number}")
-    else:
-        print("It is not a Ukrainian number")
+ukrphones = ''.join(re.findall("(^\W*[+]?380[\d]{9}|0[\d]{9}$)", number))
+
+if number == ukrphones:
+    print(f"It is a Ukrainian number:{number}")
+    phonebook[name] = number
+else:
+    phonebook.clear()
+    print("It is not a Ukrainian number")
+
+
 
 while True:
     user_input = input('Enter a command:')
@@ -28,21 +29,19 @@ while True:
         name = input('Enter a name:')
         if not name in phonebook.keys():
             number = input('Enter a number:')
-            phonebook[name] = number
 
-            ukrphones = ''.join(re.findall("([+]?380\d{9}|0\d{9})", number))
+            ukrphones = ''.join(re.findall("(^\W*[+]?380[\d]{9}|0[\d]{9}$)", number))
 
             if number == ukrphones:
                 print(f"It is a Ukrainian number:{number}")
+                phonebook[name] = number
+
+                print('New contact was added')
             else:
                 print("It is not a Ukrainian number")
-
-            print('New contact was added')
         else:
             name in phonebook.keys()
             print("Fault. There is such name in a phonebook.")
-
-
 
 
     elif command == 'delete':
