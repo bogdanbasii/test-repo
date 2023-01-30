@@ -7,7 +7,7 @@ name = input('Enter a name:')
 number = input('Enter a number:')
 
 
-ukrphones = ''.join(re.findall("(^\W*[+]?380[\d]{9}|0[\d]{9}$)", number))
+ukrphones = ''.join(re.findall(r"^(?:(?:\+380|380|0)\d{9})$", number))
 
 if number == ukrphones:
     print(f"It is a Ukrainian number:{number}")
@@ -30,7 +30,7 @@ while True:
         if not name in phonebook.keys():
             number = input('Enter a number:')
 
-            ukrphones = ''.join(re.findall("(^\W*[+]?380[\d]{9}|0[\d]{9}$)", number))
+            ukrphones = ''.join(re.findall(r"^(?:(?:\+380|380|0)\d{9})$", number))
 
             if number == ukrphones:
                 print(f"It is a Ukrainian number:{number}")
