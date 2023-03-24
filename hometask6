@@ -1,0 +1,69 @@
+Task 1
+
+import time
+def my_decorator(func):
+    def wrap(*args, **kwargs):
+        print(time.ctime())
+        return_value = func(*args, **kwargs)
+        fname = func.__name__
+        print(fname)
+        return return_value
+    return wrap
+
+@my_decorator
+def my_func():
+    print('This is my func')
+my_func()
+
+Task 2
+class MyException(Exception):
+    pass
+if True:
+    raise MyException('Custom exception is occured')
+
+Task 3
+
+while True:
+    try:
+        class CtxManager:
+            def __enter__(self):
+                print('==========')
+                # return "Hello, world!"
+
+            def __exit__(self, exc_type, exc_val, exc_tb):
+                print('==========')
+
+        with CtxManager() as hello:
+            while True:
+
+                n = int(input('Input a number: '))
+                def f(n):
+                    a, b = 0, 1
+                    for i in range(0, n):
+                        a, b = b, a + b
+                    return a
+                print(f(n))
+            print(hello)
+    except Exception:
+        print("Exception")
+# #
+
+
+
+Task 4
+while True:
+    try:
+        print('==========')
+        while True:
+            n = int(input('Input a number: '))
+            def f(n):
+                a, b = 0, 1
+                for i in range(0, n):
+                    a, b = b, a + b
+                return a
+            print(f(n))
+        print('==========')
+    except Exception:
+        print("Exception")
+
+
