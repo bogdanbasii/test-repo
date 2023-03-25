@@ -9,8 +9,6 @@ print("Site: ", random_site)
 print("Status code: ", response.status_code)
 print("HTML length: ", len(response.text))
 
-import json
-
 city = input("Enter city name: ")
 url = f"https://geocoding-api.open-meteo.com/v1/search?name={city}"
 response = requests.get(url)
