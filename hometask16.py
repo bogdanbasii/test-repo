@@ -24,3 +24,4 @@ else:
     current_weather = data["current_weather"]
     for i in current_weather:
         print(i, current_weather[i])
+        
