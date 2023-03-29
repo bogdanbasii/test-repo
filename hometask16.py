@@ -13,7 +13,7 @@ city = input("Enter city name: ")
 url = f"https://geocoding-api.open-meteo.com/v1/search?name={city}"
 response = requests.get(url)
 data = json.loads(response.text)
-if data['count'] == 0:
+if not data.get('results'):
     print(f"{city} is not a city name.")
 else:
     res = data.get('results')
