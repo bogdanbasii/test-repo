@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+  </head>
+  <body>
+    {% if session.get('username') %}
+    <p>Hello, {{ session['username'] }}!</p>
+    {% endif %}
+    <h1>{{ title }}</h1>
+  </body>
+</html>

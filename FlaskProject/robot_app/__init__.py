@@ -3,6 +3,7 @@ from logging.config import dictConfig
 from .config import AppConfig
 
 app = Flask(__name__)
+app.secret_key = 'secret_key'
 
 dictConfig({
     'version': 1,
@@ -15,3 +16,4 @@ dictConfig({
 app.config.from_object(AppConfig)
 
 from .views import *
+from .class_based_views import *

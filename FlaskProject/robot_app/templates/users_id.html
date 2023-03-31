@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Результат запиту користувача</title>
+  </head>
+  <body>
+    {% if session.get('username') %}
+    <p>Hello, {{ session['username'] }}!</p>
+    {% endif %}
+    {% if id %}
+      {% if is_found %}
+        <h1>Користувач з ID {{ id }} знайдений</h1>
+      {% else %}
+        <h1>Користувач з ID {{ id }} не знайдений</h1>
+      {% endif %}
+    {% endif %}
+  </body>
+</html>
