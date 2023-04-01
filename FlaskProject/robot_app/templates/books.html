@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Список випадкових книг</title>
+  </head>
+  <body>
+    {% if session.get('username') %}
+    <p>Hello, {{ session['username'] }}!</p>
+    {% endif %}
+    <h1>Список випадкових книг:</h1>
+    {{ book_list|safe }}
+  </body>
+</html>
