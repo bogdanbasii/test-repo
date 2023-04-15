@@ -17,7 +17,7 @@ dictConfig({
 })
 
 app.config.from_object(AppConfig)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///robot-database.sqlite'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 
 db.init_app(app)
 
