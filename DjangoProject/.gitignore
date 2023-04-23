@@ -2,3 +2,10 @@
 venv/
 db.sqlite3
 .idea/
+book/__pycache__/
+book/migrations/__pycache__/
+purchase/__pycache__/
+purchase/migrations/__pycache__/
+user/migrations/__pycache__/0001_initial.cpython-39.pyc
+user/migrations/__pycache__/0002_delete_user.cpython-39.pyc
+user/migrations/__pycache__/0003_initial.cpython-39.pyc
