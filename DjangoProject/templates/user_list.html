@@ -1,7 +1,15 @@
-
-
-
-<p>{% for user in users %}
-    {{ user.first_name }} {{ user.last_name }}
-    {% endfor %}</p>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User List</title>
+</head>
+<body>
+    <h1>User List</h1>
+    <p>
+        {% for user in users %}
+            {{ user.first_name }} {{ user.last_name }}
+        {% endfor %}
+    </p>
+</body>
+</html>

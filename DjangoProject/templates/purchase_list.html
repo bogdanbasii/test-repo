@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="utf-8">
+    <title>Purchase List</title>
 </head>
 <body>
-$END$
+    <h1>Purchase List</h1>
+    <p>
+        {% for purchase in object_list %}
+           {{ purchase.user }} bought {{ purchase.book }} on {{ purchase.date }}
+        {% endfor %}
+    </p>
 </body>
 </html>

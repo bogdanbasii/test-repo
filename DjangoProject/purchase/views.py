@@ -1,13 +1,26 @@
-from django.shortcuts import render
-
-# Create your views here.
-
+from django.views.generic import ListView, DetailView, CreateView
 from .models import Purchase
-from django.http import JsonResponse
+from django.urls import reverse
 
 
 # Create your views here.
 
-def get_all_purchases(request):
-    purchases = list(Purchase.objects.values('user_id', 'book_id', 'date'))
-    return JsonResponse(purchases, safe=False)
+class PurchaseListView(ListView):
+    model = Purchase
+    template_name = 'purchase_list.html'
+    context_object_name = 'purchases'
+
+
+class PurchaseDetailView(DetailView):
+    model = Purchase
+    template_name = 'purchase_detail.html'
+
+
+class PurchaseCreateView(CreateView):
+    model = Purchase
+    fields = ['user', 'book']
+    template_name = 'user_form.html'
+
+    def get_success_url(self):
+        return reverse('purchase_list')
+
