@@ -19,7 +19,7 @@ class PurchaseDetailView(DetailView):
 class PurchaseCreateView(CreateView):
     model = Purchase
     fields = ['user', 'book']
-    template_name = 'user_form.html'
+    template_name = 'purchase_form.html'
 
     def get_success_url(self):
         return reverse('purchase_list')
