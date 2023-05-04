@@ -1,7 +1,3 @@
-from user.models import User
-from rest_framework import viewsets
-from .serializers import UserSerializer
-from .pagination import UserPagination
 import django_filters
 from rest_framework import viewsets
 
