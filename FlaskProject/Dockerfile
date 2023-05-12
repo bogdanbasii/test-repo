@@ -10,4 +10,3 @@ COPY . .
 
 EXPOSE 4200
 
-CMD python3 run.py 0.0.0.0:4200
