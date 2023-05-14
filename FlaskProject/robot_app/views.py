@@ -1,7 +1,8 @@
-from flask import request, render_template, redirect, abort, session
-
+from flask import request, render_template, redirect, abort, session, jsonify
+from .models import *
 from robot_app import app
 import random
+
 
 @app.before_request
 def before_request():
@@ -18,35 +19,50 @@ names = ['Ivan', 'Petro', 'Mykola', 'Vasyl', 'Oleksandr', 'Anton']
 books = ['Kobzar', 'Bible', 'Quran', 'Eneida', 'Odyssey']
 
 @app.get('/users')
-def rand_user():
-    if 'username' in session:
-        username = session['username']
-        random_names = random.sample(names, random.randint(1, len(names)))
-        return render_template('users.html', names=random_names, username=username)
+def get_users():
+    users = User.query.all()
+    users_list = [{'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'age': user.age} for user in users]
+    return jsonify(users_list)
+
+@app.get('/users/<int:user_id>')
+def get_user(user_id):
+    user = User.query.get(user_id)
+    if user:
+        user_data = {'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'age': user.age}
+        return jsonify(user_data)
     else:
-        return redirect('/login')
+        abort(404, f'User with id {user_id} not found')
+
 
 @app.get('/books')
-def rand_books():
-    random_books = random.sample(books, random.randint(1, len(books)))
-    book_list = '<ul>'
-    for book in random_books:
-        book_list += f'<li>{book}</li>'
-    book_list += '</ul>'
-    return render_template('books.html', book_list=book_list)
+def get_books():
+    books = Book.query.all()
+    books_list = [{'id': book.id, 'title': book.title, 'author': book.author, 'year': book.year, 'price': book.price} for book in books]
+    return jsonify(books_list)
 
-@app.get('/users/<int:id>')
-def get_user(id):
-    if id % 2 == 0:
-        is_found = True
+@app.get('/books/<int:book_id>')
+def get_book(book_id):
+    book = Book.query.get(book_id)
+    if book:
+        book_data = {'id': book.id, 'title': book.title, 'author': book.author, 'year': book.year, 'price': book.price}
+        return jsonify(book_data)
     else:
-        is_found = False
-    return render_template('users_id.html', id=id, is_found=is_found)
+        abort(404, f'Book with id {book_id} not found')
 
-@app.get('/books/<string:title>')
-def get_book(title):
-    converted_title = title.capitalize()
-    return render_template('book_title.html', title=converted_title)
+@app.get('/purchases')
+def get_purchases():
+    purchases = Purchase.query.all()
+    purchases_list = [{'id': purchase.id, 'user_id': purchase.user_id, 'book_id': purchase.book_id, 'date': purchase.date} for purchase in purchases]
+    return jsonify(purchases_list)
+
+@app.get('/purchases/<int:purchase_id>')
+def get_purchase(purchase_id):
+    purchase = Purchase.query.get(purchase_id)
+    if purchase:
+        purchase_data = {'id': purchase.id, 'user_id': purchase.user_id, 'book_id': purchase.book_id, 'date': purchase.date}
+        return jsonify(purchase_data)
+    else:
+        abort(404, f'Purchase with id {purchase_id} not found')
 
 @app.get('/params')
 def get_params():

@@ -1,12 +1,12 @@
 from django.db import models
-from user.models import User
+from django.contrib.auth import get_user_model
 from book.models import Book
 
 
 # Create your models here.
 
 class Purchase(models.Model):
-    user = models.ForeignKey(User, related_name='purchases', on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), related_name='purchases', on_delete=models.CASCADE)
     book = models.ForeignKey(Book, related_name='purchases', on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
 
