@@ -1,9 +1,7 @@
 import requests
-from .services import HoroscopeService, HoroscopeServiceException
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-import json
 
-BOT_TOKEN = '5901762373:AAF5YvUzGor139zpNHZnWfQSBww38cQL_p8' # TODO move to env
+BOT_TOKEN = '5901762373:AAF5YvUzGor139zpNHZnWfQSBww38cQL_p8'
 TG_BASE_URL = 'https://api.telegram.org/bot'
 
 class User:
@@ -52,7 +50,7 @@ class TelegramHandler:
         data = {
             'chat_id': self.user.id,
             'text': text,
-            'reply_markup': markup.to_json()  # serialize markup
+            'reply_markup': markup
         }
         requests.post(f'{TG_BASE_URL}{BOT_TOKEN}/sendMessage', json=data)
 
@@ -62,11 +60,8 @@ class TelegramHandler:
             if text.startswith('/start'):
                 self.handle_start()
         elif self.data:  # handle callback data
-            try:
-                horoscope = self.get_horoscope(self.data)
-                self.send_message(horoscope)
-            except HoroscopeServiceException:
-                self.send_message("Sorry, I couldn't fetch the horoscope for you.")
+            horoscope = self.get_horoscope(self.data)
+            self.send_message(horoscope)
 
     def send_message(self, text):
         data = {
@@ -76,14 +71,14 @@ class TelegramHandler:
         requests.post(f'{TG_BASE_URL}{BOT_TOKEN}/sendMessage', json=data)
 
     def get_horoscope(self, sign):
-        url = f"https://horoscopes-ai.p.rapidapi.com/get_horoscope/{sign}/today/general/en"
+        url = "https://horoscopeapi-horoscope-v1.p.rapidapi.com/daily"
+        querystring = {"date": "today", "sign": sign}
         headers = {
-            "X-RapidAPI-Key": "898136ea7emsh51f1d621b4ff98ep1326e3jsna30eedea91c6",
-            "X-RapidAPI-Host": "horoscopes-ai.p.rapidapi.com"
+            "X-RapidAPI-Key": "3f43de580cmshd27bd26bd5e0138p1a9edbjsn021a1e5e57b5",
+            "X-RapidAPI-Host": "horoscopeapi-horoscope-v1.p.rapidapi.com"
         }
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers, params=querystring)
         if response.status_code == 200:
-            horoscope_data = response.json()
-            return horoscope_data['horoscope']  # Assuming horoscope data is under 'horoscope' key
+            return response.json().get('horoscope')
         else:
             return "Sorry, I couldn't fetch the horoscope for you."
