@@ -1,8 +1,10 @@
 import requests
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+import json
+from datetime import datetime
 
 BOT_TOKEN = '5901762373:AAF5YvUzGor139zpNHZnWfQSBww38cQL_p8'
-TG_BASE_URL = 'https://api.telegram.org/bot'
+TG_BASE_URL = 'https://api.telegram.org/bot{}/'.format(BOT_TOKEN)
+
 
 class User:
     def __init__(self, first_name, id, is_bot, language_code, username):
@@ -11,6 +13,7 @@ class User:
         self.is_bot = is_bot
         self.language_code = language_code
         self.username = username
+
 
 class TelegramHandler:
     user = None
@@ -21,38 +24,43 @@ class TelegramHandler:
         message = data.get('message')
         callback_query = data.get('callback_query')
         if message:
+            self.chat_id = message['chat']['id']
             self.user = User(**message.get('from'))
             self.text = message.get('text')
         elif callback_query:
+            self.chat_id = callback_query['message']['chat']['id']
             self.user = User(**callback_query.get('from'))
             self.data = callback_query.get('data')
 
     def handle_start(self):
-        text = "Hello, welcome to Horoscope Bot! Please choose your horoscope sign."
-        buttons = [
-            [InlineKeyboardButton("Aries", callback_data='aries')],
-            [InlineKeyboardButton("Taurus", callback_data='taurus')],
-            [InlineKeyboardButton("Gemini", callback_data='gemini')],
-            [InlineKeyboardButton("Cancer", callback_data='cancer')],
-            [InlineKeyboardButton("Leo", callback_data='leo')],
-            [InlineKeyboardButton("Virgo", callback_data='virgo')],
-            [InlineKeyboardButton("Libra", callback_data='libra')],
-            [InlineKeyboardButton("Scorpio", callback_data='scorpio')],
-            [InlineKeyboardButton("Sagittarius", callback_data='sagittarius')],
-            [InlineKeyboardButton("Capricorn", callback_data='capricorn')],
-            [InlineKeyboardButton("Aquarius", callback_data='aquarius')],
-            [InlineKeyboardButton("Pisces", callback_data='pisces')]
-        ]
-        reply_markup = InlineKeyboardMarkup(buttons)
+        text = 'Hello, I am your horoscope bot. Please, choose your zodiac sign:'
+        reply_markup = {
+            "inline_keyboard": [
+                [
+                    {"text": "Aquarius", "callback_data": "aquarius"},
+                    {"text": "Pisces", "callback_data": "pisces"},
+                    {"text": "Aries", "callback_data": "aries"},
+                    {"text": "Taurus", "callback_data": "taurus"},
+                    {"text": "Gemini", "callback_data": "gemini"},
+                    {"text": "Cancer", "callback_data": "cancer"},
+                    {"text": "Leo", "callback_data": "leo"},
+                    {"text": "Virgo", "callback_data": "virgo"},
+                    {"text": "Libra", "callback_data": "libra"},
+                    {"text": "Scorpio", "callback_data": "scorpio"},
+                    {"text": "Sagittarius", "callback_data": "sagittarius"},
+                    {"text": "Capricorn", "callback_data": "capricorn"}
+                ]
+            ]
+        }
         self.send_markupmessage(text, reply_markup)
 
-    def send_markupmessage(self, text, markup):
+    def send_markupmessage(self, text, reply_markup):
         data = {
-            'chat_id': self.user.id,
-            'text': text,
-            'reply_markup': markup
+            "chat_id": self.chat_id,
+            "text": text,
+            "reply_markup": json.dumps(reply_markup)
         }
-        requests.post(f'{TG_BASE_URL}{BOT_TOKEN}/sendMessage', json=data)
+        requests.post(f'{TG_BASE_URL}sendMessage', json=data)
 
     def handle(self):
         if self.text:
@@ -68,17 +76,13 @@ class TelegramHandler:
             'chat_id': self.user.id,
             'text': text
         }
-        requests.post(f'{TG_BASE_URL}{BOT_TOKEN}/sendMessage', json=data)
+        requests.post(f'{TG_BASE_URL}sendMessage', json=data)
 
     def get_horoscope(self, sign):
-        url = "https://horoscopeapi-horoscope-v1.p.rapidapi.com/daily"
-        querystring = {"date": "today", "sign": sign}
-        headers = {
-            "X-RapidAPI-Key": "3f43de580cmshd27bd26bd5e0138p1a9edbjsn021a1e5e57b5",
-            "X-RapidAPI-Host": "horoscopeapi-horoscope-v1.p.rapidapi.com"
-        }
-        response = requests.get(url, headers=headers, params=querystring)
+        url = "https://aztro.sameerkumar.website/"
+        params = {'sign': sign, 'day': 'today'}
+        response = requests.post(url, params=params)
         if response.status_code == 200:
-            return response.json().get('horoscope')
+            return response.json('description')
         else:
             return "Sorry, I couldn't fetch the horoscope for you."
