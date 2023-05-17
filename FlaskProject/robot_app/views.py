@@ -1,8 +1,6 @@
 from flask import request, render_template, redirect, abort, session, jsonify
 from .models import *
 from robot_app import app
-import random
-
 
 @app.before_request
 def before_request():
