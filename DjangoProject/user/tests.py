@@ -6,7 +6,6 @@ from .models import User
 
 
 class RandomUserFactory(factory.django.DjangoModelFactory):
-    id = random.randint(1, 100)
     first_name = factory.Faker('first_name')
     last_name = factory.Faker('last_name')
     age = random.randint(1, 100)
