@@ -6,6 +6,7 @@ from .models import User
 
 
 class RandomUserFactory(factory.django.DjangoModelFactory):
+    id = random.randint(1, 100)
     first_name = factory.Faker('first_name')
     last_name = factory.Faker('last_name')
     age = random.randint(1, 100)
@@ -50,6 +51,7 @@ class UserViewSetTest(TestCase):
 
     def test_delete_user(self):
         response = self.client.delete(f'/users/{self.user.id}/')
+        print(self.user)
         print(response.request)
         self.assertEqual(response.status_code, 204)
 
