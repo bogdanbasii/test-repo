@@ -2,10 +2,14 @@ import requests
 import json
 from core.utils import get_horoscope_by_day
 from core.routes import ZODIAC_SIGNS
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
-BOT_TOKEN = '5901762373:AAF5YvUzGor139zpNHZnWfQSBww38cQL_p8'
-TG_BASE_URL = 'https://api.telegram.org/bot{}/'.format(BOT_TOKEN)
+BOT_TOKEN = os.getenv('BOT_TOKEN')
+TG_BASE_URL = os.getenv('TG_BASE_URL')
 
 
 class User:
@@ -35,6 +39,7 @@ class TelegramHandler:
             self.data = callback_query.get('data')
 
     def handle_start(self):
+        print("In handle start...")
         text = 'Hello, I am your horoscope bot. Please, choose your zodiac sign to get a prediction:'
         reply_markup = {
             "inline_keyboard": [
@@ -60,7 +65,7 @@ class TelegramHandler:
             "text": text,
             "reply_markup": json.dumps(reply_markup)
         }
-        requests.post(f'{TG_BASE_URL}sendMessage', json=data)
+        requests.post(f'{TG_BASE_URL}{BOT_TOKEN}/sendMessage', json=data)
 
     def handle(self):
         if self.text:
@@ -68,10 +73,12 @@ class TelegramHandler:
             if text.startswith('/start'):
                 self.handle_start()
         elif self.data:  # handle callback data
+            print(f"Handling callback data: {self.data}")
             if self.data == 'get_another_forecast':
                 self.handle_start()
             else:
                 horoscope = self.get_horoscope(self.data)
+                print(f"Fetched horoscope: {horoscope}")
                 self.send_message(horoscope)
 
     def send_message(self, text):
@@ -85,7 +92,8 @@ class TelegramHandler:
             'text': text,
             'reply_markup': json.dumps(reply_markup)
         }
-        requests.post(f'{TG_BASE_URL}sendMessage', json=data)
+        response = requests.post(f'{TG_BASE_URL}{BOT_TOKEN}/sendMessage', json=data)
+        print("Response from send_message: ", response.json())  # print the response from the sendMessage API
 
     def get_horoscope(self, sign):
         zodiac_num = ZODIAC_SIGNS[sign.capitalize()]
