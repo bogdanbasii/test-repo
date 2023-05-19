@@ -1,6 +1,8 @@
 import requests
 import json
-from datetime import datetime
+from core.utils import get_horoscope_by_day
+from core.routes import ZODIAC_SIGNS
+
 
 BOT_TOKEN = '5901762373:AAF5YvUzGor139zpNHZnWfQSBww38cQL_p8'
 TG_BASE_URL = 'https://api.telegram.org/bot{}/'.format(BOT_TOKEN)
@@ -33,23 +35,21 @@ class TelegramHandler:
             self.data = callback_query.get('data')
 
     def handle_start(self):
-        text = 'Hello, I am your horoscope bot. Please, choose your zodiac sign:'
+        text = 'Hello, I am your horoscope bot. Please, choose your zodiac sign to get a prediction:'
         reply_markup = {
             "inline_keyboard": [
-                [
-                    {"text": "Aquarius", "callback_data": "aquarius"},
-                    {"text": "Pisces", "callback_data": "pisces"},
-                    {"text": "Aries", "callback_data": "aries"},
-                    {"text": "Taurus", "callback_data": "taurus"},
-                    {"text": "Gemini", "callback_data": "gemini"},
-                    {"text": "Cancer", "callback_data": "cancer"},
-                    {"text": "Leo", "callback_data": "leo"},
-                    {"text": "Virgo", "callback_data": "virgo"},
-                    {"text": "Libra", "callback_data": "libra"},
-                    {"text": "Scorpio", "callback_data": "scorpio"},
-                    {"text": "Sagittarius", "callback_data": "sagittarius"},
-                    {"text": "Capricorn", "callback_data": "capricorn"}
-                ]
+                [{"text": "Aquarius", "callback_data": "aquarius"}],
+                [{"text": "Pisces", "callback_data": "pisces"}],
+                [{"text": "Aries", "callback_data": "aries"}],
+                [{"text": "Taurus", "callback_data": "taurus"}],
+                [{"text": "Gemini", "callback_data": "gemini"}],
+                [{"text": "Cancer", "callback_data": "cancer"}],
+                [{"text": "Leo", "callback_data": "leo"}],
+                [{"text": "Virgo", "callback_data": "virgo"}],
+                [{"text": "Libra", "callback_data": "libra"}],
+                [{"text": "Scorpio", "callback_data": "scorpio"}],
+                [{"text": "Sagittarius", "callback_data": "sagittarius"}],
+                [{"text": "Capricorn", "callback_data": "capricorn"}]
             ]
         }
         self.send_markupmessage(text, reply_markup)
@@ -68,21 +68,26 @@ class TelegramHandler:
             if text.startswith('/start'):
                 self.handle_start()
         elif self.data:  # handle callback data
-            horoscope = self.get_horoscope(self.data)
-            self.send_message(horoscope)
+            if self.data == 'get_another_forecast':
+                self.handle_start()
+            else:
+                horoscope = self.get_horoscope(self.data)
+                self.send_message(horoscope)
 
     def send_message(self, text):
+        reply_markup = {
+            "inline_keyboard": [
+                [{"text": "Get another forecast", "callback_data": "get_another_forecast"}]
+            ]
+        }
         data = {
             'chat_id': self.user.id,
-            'text': text
+            'text': text,
+            'reply_markup': json.dumps(reply_markup)
         }
         requests.post(f'{TG_BASE_URL}sendMessage', json=data)
 
     def get_horoscope(self, sign):
-        url = "https://aztro.sameerkumar.website/"
-        params = {'sign': sign, 'day': 'today'}
-        response = requests.post(url, params=params)
-        if response.status_code == 200:
-            return response.json('description')
-        else:
-            return "Sorry, I couldn't fetch the horoscope for you."
+        zodiac_num = ZODIAC_SIGNS[sign.capitalize()]
+        horoscope = get_horoscope_by_day(zodiac_num, 'today')
+        return horoscope
