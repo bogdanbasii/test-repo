@@ -18,3 +18,4 @@ class Purchase(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'))
     date = db.Column(db.String)
+
