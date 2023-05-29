@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'purchase.apps.PurchaseConfig',
     'rest_framework',
     'django_filters',
+    'django_extensions',
     'django_celery_beat',
 ]
 

@@ -1,13 +1,10 @@
 import django_filters
 from rest_framework import viewsets
-
 from user.models import User
 from .pagination import UserPagination
 from .serializers import UserSerializer
 from user.tasks import print_purchases_count
 
-
-# Create your views here.
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -19,12 +16,12 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 
+
+
     def create(self, request, *args, **kwargs):
         user_id = request.data.get('user_id')
         print_purchases_count.delay(user_id)
         return super().create(request, *args, **kwargs)
-
-
 
 
 
@@ -45,4 +42,4 @@ class UserViewSet(viewsets.ModelViewSet):
 #     template_name = 'user_form.html'
 #
 #     def get_success_url(self):
-#         return reverse('user_list')
+#         return reverse('user_list'
