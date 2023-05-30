@@ -1,4 +1,3 @@
-import requests
 from tg_bot import app
 from flask import request
 from .handlers import TelegramHandler
