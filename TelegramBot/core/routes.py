@@ -32,7 +32,6 @@ parser_copy.add_argument('day', type=str, required=True,
 
 @ns.route('/get-horoscope/daily')
 class DailyHoroscopeAPI(Resource):
-    '''Shows daily horoscope of zodiac signs'''
     @ns.doc(parser=parser_copy)
     def get(self):
         args = parser_copy.parse_args()
