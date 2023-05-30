@@ -13,7 +13,7 @@ TG_BASE_URL = os.getenv('TG_BASE_URL')
 
 
 class User:
-    def __init__(self, first_name, id, is_bot, language_code, username):
+    def __init__(self, first_name, id, is_bot, language_code, username, **kwargs):
         self.first_name = first_name
         self.id = id
         self.is_bot = is_bot
